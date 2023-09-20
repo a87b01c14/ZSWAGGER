@@ -65,7 +65,7 @@ START-OF-SELECTION.
 END-OF-SELECTION .
   "SALV creation with only table passed
   go_salv = NEW zcl_salv(
-    im_table    = gt_data
+    im_table    = REF #( gt_data )
 *   im_pfstatus = 'ZSALV_STATUS'
     im_t_events = VALUE #( ( name = zcl_salv=>events-link_click form = 'FRM_LINK_CLICK' )
 *                           ( name = zcl_salv=>events-added_function form = 'FRM_ADDED_FUNCTION')
@@ -100,7 +100,8 @@ FORM frm_link_click USING sender TYPE REF TO cl_salv_events_table
       ASSIGN COMPONENT column OF STRUCTURE <fs_row> TO <fs_cell>.
       CHECK sy-subrc = 0.
       gv_text = <fs_cell>.
-      CALL SCREEN 100.
+      cl_demo_output=>display_json( gv_text ).
+*      CALL SCREEN 100.
 
   ENDCASE.
 ENDFORM.
